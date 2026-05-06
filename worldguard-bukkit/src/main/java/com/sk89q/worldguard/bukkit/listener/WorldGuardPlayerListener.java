@@ -264,7 +264,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
                 ApplicableRegionSet set = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery()
                         .getApplicableRegions(BukkitAdapter.adapt(block.getLocation()), RegionQuery.QueryOption.SORT);
                 if (set.size() > 0) {
-                    player.sendMessage(ChatColor.YELLOW + "Can you build? " + (set.testState(localPlayer, Flags.BUILD) ? "Yes" : "No"));
+                    player.sendMessage(ChatColor.YELLOW + "Tudsz építeni? " + (set.testState(localPlayer, Flags.BUILD) ? "Igen" : "Nem"));
 
                     StringBuilder str = new StringBuilder();
                     for (Iterator<ProtectedRegion> it = set.iterator(); it.hasNext();) {
@@ -274,9 +274,9 @@ public class WorldGuardPlayerListener extends AbstractListener {
                         }
                     }
 
-                    localPlayer.print("Applicable regions: " + str);
+                    localPlayer.print("Alkalmazható régiók: " + str);
                 } else {
-                    localPlayer.print("WorldGuard: No defined regions here!");
+                    localPlayer.print("WorldGuard: Itt nincs régió meghatározva!");
                 }
 
                 event.setUseItemInHand(Event.Result.DENY);
