@@ -81,14 +81,13 @@ public final class Materials {
         ENTITY_ITEMS.put(EntityType.ARMOR_STAND, Material.ARMOR_STAND);
         ENTITY_ITEMS.put(EntityType.END_CRYSTAL, Material.END_CRYSTAL);
 
-        for (String wood : new String[]{"OAK", "SPRUCE", "BIRCH", "JUNGLE", "ACACIA", "DARK_OAK", "MANGROVE", "CHERRY", "PALE_OAK"}) {
-            String regular = wood + "_BOAT";
-            String chest = wood + "_CHEST_BOAT";
-            ENTITY_ITEMS.put(EntityType.valueOf(regular), Material.getMaterial(regular));
-            ENTITY_ITEMS.put(EntityType.valueOf(chest), Material.getMaterial(chest));
-        }
-        ENTITY_ITEMS.put(EntityType.BAMBOO_RAFT, Material.BAMBOO_RAFT);
-        ENTITY_ITEMS.put(EntityType.BAMBOO_CHEST_RAFT, Material.BAMBOO_CHEST_RAFT);
+        // All boat items should have an entity equivalent, so we can use the tag to map them out.
+        Tag.ITEMS_BOATS.getValues().forEach(mat -> {
+            EntityType entityEquivalent = Registry.ENTITY_TYPE.get(mat.getKey());
+            if (entityEquivalent != null) {
+                ENTITY_ITEMS.put(entityEquivalent, mat);
+            }
+        });
 
         // preset some tags to a default value, override some of them:
         putMaterialTag(Tag.DOORS, MODIFIED_ON_RIGHT);
@@ -258,55 +257,9 @@ public final class Materials {
         MATERIAL_FLAGS.put(Material.BARRIER, 0);
         MATERIAL_FLAGS.put(Material.STRUCTURE_VOID, 0);
         // 1.12
-        MATERIAL_FLAGS.put(Material.BLACK_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.BLUE_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.BROWN_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.CYAN_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.GRAY_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.GREEN_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.LIGHT_BLUE_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.YELLOW_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.LIGHT_GRAY_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.LIME_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.MAGENTA_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.ORANGE_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.PINK_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.PURPLE_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.RED_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.WHITE_CONCRETE, 0);
-        MATERIAL_FLAGS.put(Material.BLACK_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.BLUE_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.BROWN_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.CYAN_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.GRAY_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.GREEN_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.LIGHT_BLUE_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.YELLOW_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.LIGHT_GRAY_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.LIME_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.MAGENTA_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.ORANGE_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.PINK_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.PURPLE_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.RED_CONCRETE_POWDER, 0);
-        MATERIAL_FLAGS.put(Material.WHITE_CONCRETE_POWDER, 0);
-
-        MATERIAL_FLAGS.put(Material.WHITE_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.ORANGE_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.MAGENTA_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.LIGHT_BLUE_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.YELLOW_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.LIME_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.PINK_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.GRAY_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.LIGHT_GRAY_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.CYAN_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.PURPLE_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.BLUE_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.BROWN_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.GREEN_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.RED_GLAZED_TERRACOTTA, 0);
-        MATERIAL_FLAGS.put(Material.BLACK_GLAZED_TERRACOTTA, 0);
+        putMaterialTag(Tag.CONCRETE, 0);
+        putMaterialTag(Tag.CONCRETE_POWDERS, 0);
+        putMaterialTag(Tag.GLAZED_TERRACOTTA, 0);
 
         // 1.13
         MATERIAL_FLAGS.put(Material.ANDESITE, 0);
@@ -726,7 +679,6 @@ public final class Materials {
         MATERIAL_FLAGS.put(Material.POLISHED_DEEPSLATE, 0);
         MATERIAL_FLAGS.put(Material.CALCITE, 0);
         MATERIAL_FLAGS.put(Material.TUFF, 0);
-        MATERIAL_FLAGS.put(Material.DRIPSTONE_BLOCK, 0);
         MATERIAL_FLAGS.put(Material.ROOTED_DIRT, 0);
 
         MATERIAL_FLAGS.put(Material.RAW_IRON_BLOCK, 0);
@@ -979,6 +931,21 @@ public final class Materials {
         MATERIAL_FLAGS.put(Material.NETHERITE_NAUTILUS_ARMOR, 0);
         MATERIAL_FLAGS.put(Material.NETHERITE_HORSE_ARMOR, 0);
         putMaterialTag(Tag.ITEMS_SPEARS, 0);
+
+        // 26.1
+        MATERIAL_FLAGS.put(Material.GOLDEN_DANDELION, 0);
+
+        // 26.2
+        MATERIAL_FLAGS.put(Material.CINNABAR, 0);
+        MATERIAL_FLAGS.put(Material.POLISHED_CINNABAR, 0);
+        MATERIAL_FLAGS.put(Material.CINNABAR_BRICKS, 0);
+        MATERIAL_FLAGS.put(Material.CHISELED_CINNABAR, 0);
+        MATERIAL_FLAGS.put(Material.POTENT_SULFUR, 0);
+        MATERIAL_FLAGS.put(Material.SULFUR, 0);
+        MATERIAL_FLAGS.put(Material.POLISHED_SULFUR, 0);
+        MATERIAL_FLAGS.put(Material.SULFUR_BRICKS, 0);
+        MATERIAL_FLAGS.put(Material.CHISELED_SULFUR, 0);
+        putMaterialTag(Tag.SPELEOTHEMS, 0);
 
         Stream.concat(Stream.concat(
                 Tag.CORAL_BLOCKS.getValues().stream(),
@@ -1314,6 +1281,7 @@ public final class Materials {
             case SQUID_SPAWN_EGG -> EntityType.SQUID;
             case STRAY_SPAWN_EGG -> EntityType.STRAY;
             case STRIDER_SPAWN_EGG -> EntityType.STRIDER;
+            case SULFUR_CUBE_SPAWN_EGG -> EntityType.SULFUR_CUBE;
             case TADPOLE_SPAWN_EGG -> EntityType.TADPOLE;
             case TRADER_LLAMA_SPAWN_EGG -> EntityType.TRADER_LLAMA;
             case TROPICAL_FISH_SPAWN_EGG -> EntityType.TROPICAL_FISH;
@@ -1362,7 +1330,7 @@ public final class Materials {
         // yea, that's not all, there are some more
         return switch (type) {
             case PUMPKIN, MELON, CACTUS, SUGAR_CANE, BAMBOO, BAMBOO_SAPLING,
-                    SWEET_BERRY_BUSH, NETHER_WART, CAVE_VINES, CAVE_VINES_PLANT ->
+                 SWEET_BERRY_BUSH, NETHER_WART, CAVE_VINES, CAVE_VINES_PLANT, COCOA ->
                     true;
             default -> false;
         };
